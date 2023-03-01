@@ -4,7 +4,7 @@ public class BigNumArithmetic{
 
     }
     // Use str_to_num without leading 0's
-    public LList str_to_num(String string, LList list){
+    public static LList str_to_num(String string, LList list){
         // Base case
         // String is "" return
         if(string.isEmpty()){
@@ -13,10 +13,9 @@ public class BigNumArithmetic{
 
         // Recursive case
         // Set node equal to first digit
-        char c = string.charAt(0);
-        list.append((int) c);
+
         // set node.next to str_to_num(substring)
-        str_to_num(string.substring(1), list);
+        // str_to_num(string.substring(1), list);
         return list;
     }
 
