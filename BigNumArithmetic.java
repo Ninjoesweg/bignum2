@@ -34,4 +34,23 @@ public class BigNumArithmetic{
             return string;
         }
     }
+
+    // Use string with spaces and numbers
+    public String[] removeSpace(String string, String[] array){
+        while(!string.isEmpty() && string.charAt(0) == ' '){
+            string = string.substring(1);
+        }
+        int c = 0;
+        if(string.isEmpty()){
+            return array;
+        }else {
+            while(string.charAt(c) != ' '){
+                c++;
+            }
+            int length = array.length;
+            array[length] = string.substring(0, c);
+            removeSpace(string.substring(c), array);
+        }
+        return array;
+    }
 }
