@@ -29,9 +29,19 @@ class BigNumArithmeticTest {
 
     @Test
     void getFirstTest(){
-        String testString = "1   22    33";
-        String temp = BigNumArithmetic.getFirst(testString);
-        assertEquals("1", temp);
-        assertEquals("   22    33", testString);
+        String testString = "123   22    33";
+        LList tempList = new LList();
+        BigNumArithmetic.readLine(testString);
+        LStack stack = BigNumArithmetic.getStack();
+        tempList = (LList) stack.pop();
+        assertEquals(3, tempList.get(0));
+        assertEquals(3, tempList.get(1));
+        tempList = (LList) stack.pop();
+        assertEquals(2, tempList.get(0));
+        assertEquals(2, tempList.get(1));
+        tempList = (LList) stack.pop();
+        assertEquals(3, tempList.get(0));
+        assertEquals(2, tempList.get(1));
+        assertEquals(1, tempList.get(2));
     }
 }

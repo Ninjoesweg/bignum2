@@ -1,7 +1,22 @@
+import java.io.FileReader;
+import java.io.IOException;
 
 public class BigNumArithmetic{
-    public static void main(String args){
-
+    private static LStack stack = new LStack();
+    private static String lines = "";
+    public static void main(String[] args){
+        String filename = args[1];
+        try {
+           lines = readFile(filename);
+        }catch (IOException e){
+            System.out.println("error");
+        }
+        while(!lines.isEmpty()){
+            readLine(getFirstLine());
+        }
+        LList test = new LList();
+        test = (LList) stack.pop();
+        System.out.println(test.get(0));
     }
     // Use str_to_num without leading 0's
     public static LList str_to_num(String string, LList list){
@@ -13,7 +28,9 @@ public class BigNumArithmetic{
 
         // Recursive case
         // Set node equal to first digit
-        list.append(char_to_int(string.charAt(0)));
+        list.moveToStart();
+        // Insert to reverse num order
+        list.insert(char_to_int(string.charAt(0)));
         // set node.next to str_to_num(substring)
         str_to_num(string.substring(1), list);
         return list;
@@ -39,27 +56,67 @@ public class BigNumArithmetic{
         while(!string.isEmpty() && string.charAt(0) == ' '){
             string = string.substring(1);
         }
-        if(string.isEmpty()){
-            return string;
-        }else {
-            removeSpace(string.substring(1));
-        }
         return string;
     }
     // Remove space before running
-    public static String getFirst(String string, Stack stack){
+    public static String getFirst(String string){
+        string = removeSpace(string);
+        string = remove0(string);
         if(string.isEmpty()){
             return string;
         }
         else{
             int i = 0;
-            if(i < string.length() && string.charAt(i) != ' '){
+            while(i < string.length() && string.charAt(i) != ' '){
                 i++;
             }
-            String temp = string.substring(i);
-            return temp;
+            if(string.charAt(0) == '+'){
+                // Add
+            }
+            else if(string.charAt(0) == '*'){
+                // Multiply
+            } else if (string.charAt(0) == '^') {
+                // Exponent
+            }
+            else {
+                LList tempList = new LList();
+                stack.push(str_to_num(string.substring(0, i), tempList));
+                String temp = string.substring(i);
+                return temp;
+            }
+            return string;
         }
     }
+
+    //
+    public static void readLine(String string){
+        while(!string.isEmpty()){
+            string = getFirst(string);
+        }
+    }
+
+    public static String readFile(String filename) throws IOException {
+        FileReader fileReader = new FileReader(filename);
+        String value = "";
+        while(fileReader.ready()){
+            value += (char) fileReader.read();
+        }
+        return value;
+    }
+
+    public static String getFirstLine(){
+        if(lines.isEmpty()){
+            return "";
+        }
+        int i = 0;
+        while(i < lines.length() && lines.charAt(i) != '\n'){
+            i++;
+        }
+        String temp = lines.substring(0, i);
+        lines = lines.substring(i + 1);
+        return temp;
+    }
+
 
     public static int char_to_int(char c){
         if(c == '0'){
@@ -94,4 +151,15 @@ public class BigNumArithmetic{
         }
         return 0;
     }
+
+    public boolean isValid(LStack stack){
+        if(stack.length() < 2){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public static LStack getStack() {return stack;}
 }
