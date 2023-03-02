@@ -47,7 +47,7 @@ public class BigNumArithmetic{
         return string;
     }
     // Remove space before running
-    public static String getFirst(String string){
+    public static String getFirst(String string, Stack stack){
         if(string.isEmpty()){
             return string;
         }
@@ -56,7 +56,7 @@ public class BigNumArithmetic{
             if(i < string.length() && string.charAt(i) != ' '){
                 i++;
             }
-            String temp = string.substring(0, i);
+            String temp = string.substring(i);
             return temp;
         }
     }
