@@ -2,10 +2,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class BigNumArithmetic{
-    private static LStack stack = new LStack();
-    private static String lines = "";
-    private static String output = "";
-    private static String equals = "";
+    //initialize variables
+    private static LStack stack = new LStack();//we use this to pop and push digits
+    private static String lines = "";//has everything that has not been checked
+    private static String output = "";//this is used for formatting output
+    private static String equals = "";// to perform operation and the result if line in is valid
     public static void main(String[] args){
         if(args.length < 2){
             System.exit(0);
@@ -69,48 +70,59 @@ public class BigNumArithmetic{
 
     // Use string with spaces and numbers
     public static String removeSpace(String string){
+        //checks the string and if the first character is a space it deletes it changes the string and checks it
+        //again
         while(!string.isEmpty() && string.charAt(0) == ' '){
+            //gets everything except the first index
             string = string.substring(1);
         }
-        return string;
+        return string;//return without spaces
     }
     // Remove space before running
     public static String getFirst(String string){
-        string = removeSpace(string);
-        string = remove0(string);
+        string = removeSpace(string);//removes the leading space
+        string = remove0(string);//removes leading 0s
+        //checks if the string is empty
         if(string.isEmpty()){
             return string;
         }
         else{
-            int i = 0;
+            int i = 0;//initialize counter to loop through the string until 1st space using string length
             while(i < string.length() && string.charAt(i) != ' '){
-                i++;
+                i++;//update counter
             }
+            //checks to see what operation is there it is addition
             if(string.charAt(0) == '+'){
                 // Add
-                if(!isValid()){
+                if(!isValid()){// checks if stacks has two numbers on the stack to perform operations
                     stack.push(new LList());
                     return "";
                 }
-                stack.push(add());
-                return string.substring(1);
+                stack.push(add());//pushing the sum back onto the stack
+                return string.substring(1);//return everything not first the first char(basically get rid of +)
             }
+            //checks to see what operation is there it is multiplication
             else if(string.charAt(0) == '*'){
                 // Multiply
+                // checks if stacks has two numbers on the stack to perform operations
                 if(!isValid()){
                     return string;
                 }
+                //checks to see what operation is there it is exponent
+
             } else if (string.charAt(0) == '^') {
                 // Exponent
-                if(!isValid()){
+                if(!isValid()){// checks if stacks has two numbers on the stack to perform operations
                     return string;
                 }
             }
             else {
+                //create temp list to use str_to_num method
                 LList tempList = new LList();
+                //pushing the tempList onto the stack and the it contains the first num in the string
                 stack.push(str_to_num(string.substring(0, i), tempList));
-                String temp = string.substring(i);
-                return temp;
+                //returns a substring of everything we have not read yet
+                return string.substring(i);
             }
             return string;
         }
@@ -124,46 +136,55 @@ public class BigNumArithmetic{
     }
 
     public static String readFile(String filename) throws IOException {
+        //initialize filereader
         FileReader fileReader = new FileReader(filename);
         String value = "";
+        //tells whether file is ready to be read one char at time
         while(fileReader.ready()){
+            //string of chars
             value += (char) fileReader.read();
         }
         return value;
     }
 
     public static String getFirstLine(){
+        /*
         if(lines.isEmpty()){
             return "";
         }
-        int i = 0;
+         */
+        int i = 0;//initialize counter
+        //checks for whether we are on new line
         while(i < lines.length() && lines.charAt(i) != '\r'){
-            i++;
+            i++;//update counter
         }
+        //storing the 1st line
         String temp = lines.substring(0, i);
-        if(i + 1 < lines.length()) {
+        //storing lines as everything except the 1st line
+        if(i + 2 < lines.length()) {
             lines = lines.substring(i + 2);
         }else{
             lines = "";
         }
         return temp;
     }
-
+/*
+have to check if valid before doing add otherwise error due to our implementation
+ */
     public static LList add(){
+        //intialize LList containing nums on the stack
         LList a = (LList) stack.pop();
         LList b = (LList) stack.pop();
-        LList temp = new LList();
-        int length1 = a.length();
-        int length2 = b.length();
-        int i = 0;
-        int sum = 0;
-        int r = 0;
-        while(i < length1 && i < length2){
-            if(a.getValue() == null){
+        LList temp = new LList();//created to return the nums
+        int i = 0;//counter
+        int sum = 0;//that is the sum
+        int r = 0;//the remainder for the carry over if necessary
+        while(i < a.length() || i < b.length()){
+            if(i<a.length()){
                 sum = (int) b.getValue() + r;
                 b.next();
             }
-            else if(b.getValue() == null){
+            else if(i<b.length()){
                 sum = (int) a.getValue() + r;
                 a.next();
             } else{
