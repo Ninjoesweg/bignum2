@@ -21,16 +21,27 @@ public class BigNumArithmetic{
             output = getFirstLine();
             readLine(output);
             if(stack.length() != 1){
-
+                String t = output;
+                output = "";
+                while(!t.isEmpty()){
+                    t = removeSpace(t);
+                    t = remove0(t);
+                    int i = 0;//initialize counter to loop through the string until 1st space using string length
+                    while(i < t.length() && t.charAt(i) != ' '){
+                        i++;//update counter
+                    }
+                    output = output + t.substring(0, i) + " ";
+                    t = t.substring(i);
+                }
+                output = output + "=";
             }else{
-                equals = " = ";
                 LList temp = (LList) stack.pop();
                 int i = 1;
+                output = output + " = ";
                 while(i <= temp.length()){
-                    equals = equals + temp.get(temp.length() - i);
+                    output = output + temp.get(temp.length() - i);
                     i++;
                 }
-                output = output + equals;
             }
             System.out.println(output);
         }
@@ -180,11 +191,13 @@ have to check if valid before doing add otherwise error due to our implementatio
         int sum = 0;//that is the sum
         int r = 0;//the remainder for the carry over if necessary
         while(i < a.length() || i < b.length()){
-            if(i<a.length()){
+            // Check to see if past a's index
+            if(i >= a.length()){
                 sum = (int) b.getValue() + r;
                 b.next();
             }
-            else if(i<b.length()){
+            // Check to see if past b's index
+            else if(i >= b.length()){
                 sum = (int) a.getValue() + r;
                 a.next();
             } else{
@@ -198,47 +211,30 @@ have to check if valid before doing add otherwise error due to our implementatio
             }else{
                 r = 0;
             }
+            // add digit to llist
             temp.append(sum);
-            i++;
+            i++; // update counter
         }
         return temp;
     }
 
+    // Takes in char c and converts to int
     public static int char_to_int(char c){
-        if(c == '0'){
-            return 0;
-        }
-        if(c == '1'){
-            return 1;
-        }
-        if(c == '2'){
-            return 2;
-        }
-        if(c == '3'){
-            return 3;
-        }
-        if(c == '4'){
-            return 4;
-        }
-        if(c == '5'){
-            return 5;
-        }
-        if(c == '6'){
-            return 6;
-        }
-        if(c == '7'){
-            return 7;
-        }
-        if(c == '8'){
-            return 8;
-        }
-        if(c == '9'){
-            return 9;
-        }
+        if(c == '0'){return 0;}
+        if(c == '1'){return 1;}
+        if(c == '2'){return 2;}
+        if(c == '3'){return 3;}
+        if(c == '4'){return 4;}
+        if(c == '5'){return 5;}
+        if(c == '6'){return 6;}
+        if(c == '7'){return 7;}
+        if(c == '8'){return 8;}
+        if(c == '9'){return 9;}
         return 0;
     }
 
     public static boolean isValid(){
+        // checks if at least two nums on stack
         if(stack.length() < 2){
             return false;
         }
@@ -247,5 +243,6 @@ have to check if valid before doing add otherwise error due to our implementatio
         }
     }
 
+    // For testing
     public static LStack getStack() {return stack;}
 }
