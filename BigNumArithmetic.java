@@ -4,7 +4,12 @@ import java.io.IOException;
 public class BigNumArithmetic{
     private static LStack stack = new LStack();
     private static String lines = "";
+    private static String output = "";
+    private static String equals = "";
     public static void main(String[] args){
+        if(args.length < 2){
+            System.exit(0);
+        }
         String filename = args[1];
         try {
            lines = readFile(filename);
@@ -12,11 +17,22 @@ public class BigNumArithmetic{
             System.out.println("error");
         }
         while(!lines.isEmpty()){
-            readLine(getFirstLine());
+            output = getFirstLine();
+            readLine(output);
+            if(stack.length() != 1){
+
+            }else{
+                equals = " = ";
+                LList temp = (LList) stack.pop();
+                int i = 1;
+                while(i <= temp.length()){
+                    equals = equals + temp.get(temp.length() - i);
+                    i++;
+                }
+                output = output + equals;
+            }
+            System.out.println(output);
         }
-        LList test = new LList();
-        test = (LList) stack.pop();
-        System.out.println(test.get(0));
     }
     // Use str_to_num without leading 0's
     public static LList str_to_num(String string, LList list){
@@ -72,11 +88,23 @@ public class BigNumArithmetic{
             }
             if(string.charAt(0) == '+'){
                 // Add
+                if(!isValid()){
+                    stack.push(new LList());
+                    return "";
+                }
+                stack.push(add());
+                return string.substring(1);
             }
             else if(string.charAt(0) == '*'){
                 // Multiply
+                if(!isValid()){
+                    return string;
+                }
             } else if (string.charAt(0) == '^') {
                 // Exponent
+                if(!isValid()){
+                    return string;
+                }
             }
             else {
                 LList tempList = new LList();
@@ -109,14 +137,51 @@ public class BigNumArithmetic{
             return "";
         }
         int i = 0;
-        while(i < lines.length() && lines.charAt(i) != '\n'){
+        while(i < lines.length() && lines.charAt(i) != '\r'){
             i++;
         }
         String temp = lines.substring(0, i);
-        lines = lines.substring(i + 1);
+        if(i + 1 < lines.length()) {
+            lines = lines.substring(i + 2);
+        }else{
+            lines = "";
+        }
         return temp;
     }
 
+    public static LList add(){
+        LList a = (LList) stack.pop();
+        LList b = (LList) stack.pop();
+        LList temp = new LList();
+        int length1 = a.length();
+        int length2 = b.length();
+        int i = 0;
+        int sum = 0;
+        int r = 0;
+        while(i < length1 && i < length2){
+            if(a.getValue() == null){
+                sum = (int) b.getValue() + r;
+                b.next();
+            }
+            else if(b.getValue() == null){
+                sum = (int) a.getValue() + r;
+                a.next();
+            } else{
+                sum = (int) a.getValue() + (int) b.getValue() + r;
+                a.next();
+                b.next();
+            }
+            if(sum > 10){
+                r = sum / 10;
+                sum = sum % 10;
+            }else{
+                r = 0;
+            }
+            temp.append(sum);
+            i++;
+        }
+        return temp;
+    }
 
     public static int char_to_int(char c){
         if(c == '0'){
@@ -152,7 +217,7 @@ public class BigNumArithmetic{
         return 0;
     }
 
-    public boolean isValid(LStack stack){
+    public static boolean isValid(){
         if(stack.length() < 2){
             return false;
         }
