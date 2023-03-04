@@ -44,6 +44,7 @@ public class BigNumArithmetic {
                     t = t.substring(i);
                 }
                 output = output + "=";
+                stack.clear();
             } else {
                 LList temp = (LList) stack.pop();
                 int i = 1;
@@ -141,16 +142,22 @@ public class BigNumArithmetic {
                 }
                 stack.push(add((LList) stack.pop(), (LList) stack.pop())); //pushing the sum back onto the stack
                 //return everything not first the first char(basically get rid of +)
-                return string.substring(1);
+                string = string.substring(1);
+                string = removeSpace(string); //removes the leading space
+                return string;
             }
             //checks to see what operation is there it is multiplication
             else if (string.charAt(0) == '*') {
                 // Multiply
                 // checks if stacks has two numbers on the stack to perform operations
                 if (!isValid()) {
-                    return string;
+                    stack.push(new LList());
+                    return "";
                 }
-                multiply((LList) stack.pop(), (LList) stack.pop());
+                stack.push(multiply((LList) stack.pop(), (LList) stack.pop()));
+                string = string.substring(1);
+                string = removeSpace(string); //removes the leading space
+                return string;
                 //checks to see what operation is there it is exponent
 
             } else if (string.charAt(0) == '^') {
@@ -272,11 +279,16 @@ otherwise error due to our implementation
         int i = 0;
         while (i < a.length()){
             c =0;
-            while (c < b.length()){
-                temp = (int) b.get(c) * (int) a.get(i);
-                c++;
+            if((int) a.get(i) == 0){
+                output.append(0);
             }
-            output.append(temp);
+            else {
+                while (c < b.length()){
+                    temp = (int) b.get(c) * (int) a.get(i);
+                    output.append(temp);
+                    c++;
+                }
+            }
             i++;
         }
         output = round(output);
@@ -293,10 +305,12 @@ otherwise error due to our implementation
             if((int) list.get(i) >= 10){
                 r = temp / 10;
                 temp = temp % 10;
-            } else {
-                r = 0;
+                output.append(temp);
             }
-            output.append(temp);
+            else {
+                r = 0;
+                output.append(temp);
+            }
             }
             return output;
         }
