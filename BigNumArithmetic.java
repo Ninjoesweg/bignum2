@@ -205,7 +205,7 @@ have to check if valid before doing add otherwise error due to our implementatio
                 a.next();
                 b.next();
             }
-            if(sum > 10){
+            if(sum >= 10){
                 r = sum / 10;
                 sum = sum % 10;
             }else{

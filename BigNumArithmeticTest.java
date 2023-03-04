@@ -44,4 +44,85 @@ public class BigNumArithmeticTest {
         assertEquals(2, tempList.get(1));
         assertEquals(1, tempList.get(2));
     }
+
+    @Test
+    void addTest(){
+        // Simple case adding two numbers of same length without carryover
+        String test = "123 456 +";
+        BigNumArithmetic.readLine(test);
+        LStack stack = BigNumArithmetic.getStack();
+        LList list = (LList) stack.pop();
+        String output = "";
+        for(int i = 1; i <= list.length(); i++){
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("579", output);
+
+        // Simple case adding two numbers of same length with carryover
+        test = "123 567 +";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for(int i = 1; i <= list.length(); i++){
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("690", output);
+
+        // Simple case adding two numbers of different length without carryover
+        test = "12 567 +";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for(int i = 1; i <= list.length(); i++){
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("579", output);
+
+        // Simple case adding two numbers of different length with carryover
+        test = "14 567 +";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for(int i = 1; i <= list.length(); i++){
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("581", output);
+
+        // Complex case adding three numbers of different lengths with carryover
+        // and leading spaces and 0's
+        test = "    00001234    0000056     000789 + +";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for(int i = 1; i <= list.length(); i++){
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("2079", output);
+
+        // Simple case not enough operands
+        test = "1 +";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for(int i = 1; i <= list.length(); i++){
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("", output);
+
+        // Simple case not enough operators
+        test = "1 2 3 +";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for(int i = 1; i <= list.length(); i++){
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("5", output);
+    }
 }
