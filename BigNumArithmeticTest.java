@@ -8,9 +8,9 @@ public class BigNumArithmeticTest {
     void str_to_numTest() {
         LList temp = new LList();
         BigNumArithmetic.str_to_num("156", temp);
-        assertEquals(1, temp.get(0));
+        assertEquals(6, temp.get(0));
         assertEquals(5, temp.get(1));
-        assertEquals(6, temp.get(2));
+        assertEquals(1, temp.get(2));
     }
 
     @Test
