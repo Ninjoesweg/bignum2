@@ -2,8 +2,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ *
+ */
 public class BigNumArithmeticTest {
 
+    /**
+     *
+     */
     @Test
     void str_to_numTest() {
         LList temp = new LList();
@@ -13,6 +19,9 @@ public class BigNumArithmeticTest {
         assertEquals(1, temp.get(2));
     }
 
+    /**
+     *
+     */
     @Test
     void remove0Test() {
         assertEquals("120", BigNumArithmetic.remove0("00120"));
@@ -20,15 +29,21 @@ public class BigNumArithmeticTest {
         assertEquals("0", BigNumArithmetic.remove0("000000000"));
     }
 
+    /**
+     *
+     */
     @Test
-    void removeSpaceTest(){
+    void removeSpaceTest() {
         String testString = "     1  123";
         testString = BigNumArithmetic.removeSpace(testString);
         assertEquals("1  123", testString);
     }
 
+    /**
+     *
+     */
     @Test
-    void getFirstTest(){
+    void getFirstTest() {
         String testString = "123   22    33";
         LList tempList = new LList();
         BigNumArithmetic.readLine(testString);
@@ -45,15 +60,18 @@ public class BigNumArithmeticTest {
         assertEquals(1, tempList.get(2));
     }
 
+    /**
+     *
+     */
     @Test
-    void addTest(){
+    void addTest() {
         // Simple case adding two numbers of same length without carryover
         String test = "123 456 +";
         BigNumArithmetic.readLine(test);
         LStack stack = BigNumArithmetic.getStack();
         LList list = (LList) stack.pop();
         String output = "";
-        for(int i = 1; i <= list.length(); i++){
+        for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
         assertEquals("579", output);
@@ -64,7 +82,7 @@ public class BigNumArithmeticTest {
         stack = BigNumArithmetic.getStack();
         list = (LList) stack.pop();
         output = "";
-        for(int i = 1; i <= list.length(); i++){
+        for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
         assertEquals("690", output);
@@ -75,7 +93,7 @@ public class BigNumArithmeticTest {
         stack = BigNumArithmetic.getStack();
         list = (LList) stack.pop();
         output = "";
-        for(int i = 1; i <= list.length(); i++){
+        for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
         assertEquals("579", output);
@@ -86,7 +104,7 @@ public class BigNumArithmeticTest {
         stack = BigNumArithmetic.getStack();
         list = (LList) stack.pop();
         output = "";
-        for(int i = 1; i <= list.length(); i++){
+        for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
         assertEquals("581", output);
@@ -98,7 +116,7 @@ public class BigNumArithmeticTest {
         stack = BigNumArithmetic.getStack();
         list = (LList) stack.pop();
         output = "";
-        for(int i = 1; i <= list.length(); i++){
+        for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
         assertEquals("2079", output);
@@ -109,7 +127,7 @@ public class BigNumArithmeticTest {
         stack = BigNumArithmetic.getStack();
         list = (LList) stack.pop();
         output = "";
-        for(int i = 1; i <= list.length(); i++){
+        for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
         assertEquals("", output);
@@ -120,7 +138,7 @@ public class BigNumArithmeticTest {
         stack = BigNumArithmetic.getStack();
         list = (LList) stack.pop();
         output = "";
-        for(int i = 1; i <= list.length(); i++){
+        for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
         assertEquals("5", output);

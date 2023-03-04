@@ -4,7 +4,7 @@ import java.io.IOException;
 /**
  *
  */
-public class BigNumArithmetic{
+public class BigNumArithmetic {
     //initialize variables
     //we use this to pop and push digits
     private static LStack stack = new LStack();
@@ -14,16 +14,15 @@ public class BigNumArithmetic{
     /**
      * @param args
      */
-                        // to perform operation and the result if line in is valid
-    public static void main(String[] args){
-        if(args.length < 2){
+    // to perform operation and the result if line in is valid
+    public static void main(String[] args) {
+        if (args.length < 2) {
             System.exit(0);
         }
         String filename = args[1];
         try {
             lines = readFile(filename);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("error");
         }
         while (!lines.isEmpty()) {
@@ -45,8 +44,7 @@ public class BigNumArithmetic{
                     t = t.substring(i);
                 }
                 output = output + "=";
-            }
-            else {
+            } else {
                 LList temp = (LList) stack.pop();
                 int i = 1;
                 output = output + " = ";
@@ -96,8 +94,7 @@ public class BigNumArithmetic{
         else if (string.charAt(0) == '0') {
             // Recursive using substring
             return remove0(string.substring(1));
-        }
-        else {
+        } else {
             return string;
         }
     }
@@ -128,10 +125,9 @@ public class BigNumArithmetic{
         //checks if the string is empty
         if (string.isEmpty()) {
             return string;
-        }
-        else {
+        } else {
             int i = 0;//initialize counter to loop through the string
-                        // until 1st space using string length
+            // until 1st space using string length
             while (i < string.length() && string.charAt(i) != ' ') {
                 i++; //update counter
             }
@@ -156,15 +152,13 @@ public class BigNumArithmetic{
                 }
                 //checks to see what operation is there it is exponent
 
-            }
-            else if (string.charAt(0) == '^') {
+            } else if (string.charAt(0) == '^') {
                 // Exponent
                 // checks if stacks has two numbers on the stack to perform operations
                 if (!isValid()) {
                     return string;
                 }
-            }
-            else {
+            } else {
                 //create temp list to use str_to_num method
                 LList tempList = new LList();
                 //pushing the tempList onto the stack,
@@ -223,8 +217,7 @@ public class BigNumArithmetic{
         //storing lines as everything except the 1st line
         if (i + 2 < lines.length()) {
             lines = lines.substring(i + 2);
-        }
-        else {
+        } else {
             lines = "";
         }
         return temp;
@@ -255,8 +248,7 @@ otherwise error due to our implementation
             else if (i >= b.length()) {
                 sum = (int) a.getValue() + r;
                 a.next();
-            }
-            else {
+            } else {
                 sum = (int) a.getValue() + (int) b.getValue() + r;
                 a.next();
                 b.next();
@@ -264,8 +256,7 @@ otherwise error due to our implementation
             if (sum >= 10) {
                 r = sum / 10;
                 sum = sum % 10;
-            }
-            else {
+            } else {
                 r = 0;
             }
             // add digit to llist
@@ -281,28 +272,47 @@ otherwise error due to our implementation
      */
     // Takes in char c and converts to int
     public static int char_to_int(char c) {
-        if (c == '0') { return 0; }
-        if (c == '1') { return 1; }
-        if (c == '2') { return 2; }
-        if (c == '3') { return 3; }
-        if(c == '4'){return 4;}
-        if(c == '5'){return 5;}
-        if(c == '6'){return 6;}
-        if(c == '7'){return 7;}
-        if(c == '8'){return 8;}
-        if(c == '9'){return 9;}
+        if (c == '0') {
+            return 0;
+        }
+        if (c == '1') {
+            return 1;
+        }
+        if (c == '2') {
+            return 2;
+        }
+        if (c == '3') {
+            return 3;
+        }
+        if (c == '4') {
+            return 4;
+        }
+        if (c == '5') {
+            return 5;
+        }
+        if (c == '6') {
+            return 6;
+        }
+        if (c == '7') {
+            return 7;
+        }
+        if (c == '8') {
+            return 8;
+        }
+        if (c == '9') {
+            return 9;
+        }
         return 0;
     }
 
     /**
      * @return
      */
-    public static boolean isValid(){
+    public static boolean isValid() {
         // checks if at least two nums on stack
-        if(stack.length() < 2){
+        if (stack.length() < 2) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
@@ -311,5 +321,7 @@ otherwise error due to our implementation
      * @return
      */
     // For testing
-    public static LStack getStack() {return stack;}
+    public static LStack getStack() {
+        return stack;
+    }
 }
