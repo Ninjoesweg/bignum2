@@ -139,7 +139,7 @@ public class BigNumArithmetic {
                     stack.push(new LList());
                     return "";
                 }
-                stack.push(add()); //pushing the sum back onto the stack
+                stack.push(add((LList) stack.pop(), (LList) stack.pop())); //pushing the sum back onto the stack
                 //return everything not first the first char(basically get rid of +)
                 return string.substring(1);
             }
@@ -150,6 +150,7 @@ public class BigNumArithmetic {
                 if (!isValid()) {
                     return string;
                 }
+                multiply((LList) stack.pop(), (LList) stack.pop());
                 //checks to see what operation is there it is exponent
 
             } else if (string.charAt(0) == '^') {
@@ -230,10 +231,8 @@ public class BigNumArithmetic {
 have to check if valid before doing add
 otherwise error due to our implementation
  */
-    public static LList add() {
+    public static LList add(LList a, LList b) {
         //intialize LList containing nums on the stack
-        LList a = (LList) stack.pop();
-        LList b = (LList) stack.pop();
         LList temp = new LList();//created to return the nums
         int i = 0; //counter
         int sum = 0; //that is the sum
@@ -266,6 +265,41 @@ otherwise error due to our implementation
         return temp;
     }
 
+    public static LList multiply(LList a, LList b){
+        LList output = new LList();
+        int temp = 0;
+        int c;
+        int i = 0;
+        while (i < a.length()){
+            c =0;
+            while (c < b.length()){
+                temp = (int) b.get(c) * (int) a.get(i);
+                c++;
+            }
+            output.append(temp);
+            i++;
+        }
+        output = round(output);
+        return output;
+    }
+
+
+    public static LList round(LList list){
+        int r = 0;
+        int temp = 0;
+        LList output = new LList();
+        for (int i = 0; i < list.length(); i++){
+            temp = (int) list.get(i) + r;
+            if((int) list.get(i) >= 10){
+                r = temp / 10;
+                temp = temp % 10;
+            } else {
+                r = 0;
+            }
+            output.append(temp);
+            }
+            return output;
+        }
     /**
      * @param c
      * @return
