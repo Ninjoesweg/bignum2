@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BigNumArithmeticTest {
+public class BigNumArithmeticTest {
 
     @Test
     void str_to_numTest() {
