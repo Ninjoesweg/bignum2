@@ -27,9 +27,9 @@ public class BigNumArithmetic {
         }
         while (!lines.isEmpty()) {
             output = getFirstLine();
-            readLine(output);
-            if (stack.length() != 1) {
-                String t = output;
+            String t = output;
+            readLine(removeSpace(output));
+            if (stack.length() > 1) {
                 output = "";
                 while (!t.isEmpty()) {
                     t = removeSpace(t);
@@ -40,12 +40,13 @@ public class BigNumArithmetic {
                     while (i < t.length() && t.charAt(i) != ' ') {
                         i++; //update counter
                     }
-                    output = output + t.substring(0, i) + " ";
+                    t = removeSpace(t);
+                    output = output + remove0(t.substring(0, i)) + " ";
                     t = t.substring(i);
                 }
                 output = output + "=";
                 stack.clear();
-            } else {
+            } else if (!stack.isEmpty()){
                 LList temp = (LList) stack.pop();
                 int i = 1;
                 output = output + " = ";
@@ -54,7 +55,22 @@ public class BigNumArithmetic {
                     i++;
                 }
             }
-            System.out.println(output);
+            boolean loop = true;
+            if (output.isBlank()){
+                loop = false;
+            }
+            int c = 0;
+            while (loop){
+                if (c >= output.length()){
+                    loop = false;
+                } else if (output.charAt(c) == ' '){
+                    output = remove0(output.substring(0, c)) + " " + remove0(removeSpace(output.substring(c)));
+                }
+                c++;
+            }
+            if (!output.isBlank()) {
+                System.out.println(output);
+            }
         }
     }
 
@@ -88,8 +104,8 @@ public class BigNumArithmetic {
     // Use string of just leading 0's and one number no space
     public static String remove0(String string) {
         // If string was 0 to start with return "0"
-        if (string.isEmpty()) {
-            return ("0");
+        if (string.isEmpty() || string.charAt(0) == ' ') {
+            return ("0" + string);
         }
         // Check if first digit is 0
         else if (string.charAt(0) == '0') {
@@ -122,7 +138,11 @@ public class BigNumArithmetic {
     // Remove space before running
     public static String getFirst(String string) {
         string = removeSpace(string); //removes the leading space
-        string = remove0(string); //removes leading 0s
+        int c = 0;
+        while (c < string.length() && string.charAt(c) != ' '){
+            c++;
+        }
+        string = remove0(string.substring(0, c)) + string.substring(c); //removes leading 0s
         //checks if the string is empty
         if (string.isEmpty()) {
             return string;
@@ -223,14 +243,24 @@ public class BigNumArithmetic {
          */
         int i = 0; //initialize counter
         //checks for whether we are on new line
-        while (i < lines.length() && lines.charAt(i) != '\r') {
+        while (i < lines.length() && lines.charAt(i) != '\r' && lines.charAt(i) != '\n') {
             i++; //update counter
         }
         //storing the 1st line
         String temp = lines.substring(0, i);
+        boolean loop = true;
+        while (loop){
+            if(i >= lines.length()){
+                loop = false;
+            } else if (lines.charAt(i) == '\r' || lines.charAt(i) == '\n'){
+                i++;
+            } else{
+                loop = false;
+            }
+        }
         //storing lines as everything except the 1st line
-        if (i + 2 < lines.length()) {
-            lines = lines.substring(i + 2);
+        if (i < lines.length()) {
+            lines = lines.substring(i);
         } else {
             lines = "";
         }
@@ -253,17 +283,13 @@ otherwise error due to our implementation
         while (i < a.length() || i < b.length()) {
             // Check to see if past a's index
             if (i >= a.length() && i < b.length()) {
-                sum = (int) b.getValue() + r;
-                b.next();
+                sum = (int) b.get(i) + r;
             }
             // Check to see if past b's index
             else if (i >= b.length()) {
-                sum = (int) a.getValue() + r;
-                a.next();
-            } else {
-                sum = (int) a.getValue() + (int) b.getValue() + r;
-                a.next();
-                b.next();
+                sum = (int) a.get(i) + r;
+            } else if (i < b.length() && i < a.length()) {
+                sum = (int) a.get(i) + (int) b.get(i) + r;
             }
             if (sum >= 10) {
                 r = sum / 10;
@@ -274,6 +300,9 @@ otherwise error due to our implementation
             // add digit to llist
             temp.append(sum);
             i++; // update counter
+        }
+        if(r != 0){
+            temp.append(r);
         }
         return temp;
     }
@@ -358,9 +387,11 @@ otherwise error due to our implementation
             } else {
                 int temp = (int) list.get(i - 1);
                 output.moveToPos(i - 1);
-                output.remove();
-                output.append(temp + 5);
-                output.append((int) list.get(i) / 2);
+                //output.remove();
+                output.append((temp + 5));
+                if((int) list.get(i) / 2 != 0) {
+                    output.append((int) list.get(i) / 2);
+                }
             }
         }
         return output;
