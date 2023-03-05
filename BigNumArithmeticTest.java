@@ -143,4 +143,18 @@ public class BigNumArithmeticTest {
         }
         assertEquals("5", output);
     }
+
+    @Test
+    void roundTest(){
+        String output = "";
+        LList list = new LList();
+        list.append(0);
+        list.append(0);
+        list.append(1);
+        list = BigNumArithmetic.round(list);
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("100", output);
+    }
 }
