@@ -164,8 +164,15 @@ public class BigNumArithmetic {
                 // Exponent
                 // checks if stacks has two numbers on the stack to perform operations
                 if (!isValid()) {
-                    return string;
+                    stack.push(new LList());
+                    return "";
                 }
+                LList b = (LList) stack.pop();
+                LList a = (LList) stack.pop();
+                stack.push(exponent(a, b));
+                string = string.substring(1);
+                string = removeSpace(string); //removes the leading space
+                return string;
             } else {
                 //create temp list to use str_to_num method
                 LList tempList = new LList();
@@ -175,7 +182,6 @@ public class BigNumArithmetic {
                 //returns a substring of everything we have not read yet
                 return string.substring(i);
             }
-            return string;
         }
     }
 
@@ -246,7 +252,7 @@ otherwise error due to our implementation
         int r = 0; //the remainder for the carry over if necessary
         while (i < a.length() || i < b.length()) {
             // Check to see if past a's index
-            if (i >= a.length()) {
+            if (i >= a.length() && i < b.length()) {
                 sum = (int) b.getValue() + r;
                 b.next();
             }
@@ -274,24 +280,28 @@ otherwise error due to our implementation
 
     public static LList multiply(LList a, LList b){
         LList output = new LList();
+        LList tempList = new LList();
         int temp = 0;
         int c;
         int i = 0;
         while (i < a.length()){
             c =0;
-            if((int) a.get(i) == 0){
-                output.append(0);
+            int counter = 0;
+            tempList.clear();
+            while (counter < i) {
+                tempList.append(0);
+                counter++;
             }
-            else {
                 while (c < b.length()){
                     temp = (int) b.get(c) * (int) a.get(i);
-                    output.append(temp);
+                    tempList.append(temp);
                     c++;
                 }
-            }
+                tempList = round(tempList);
+            output = add(output, tempList);
             i++;
         }
-        output = round(output);
+
         return output;
     }
 
@@ -312,8 +322,50 @@ otherwise error due to our implementation
                 output.append(temp);
             }
             }
+        if(r != 0){
+            output.append(r);
+        }
+        for (int i = 0; i < output.length(); i++){
+            if((int) output.get(i) >= 10){
+                return round(output);
+            }
+        }
             return output;
         }
+
+        public static LList exponent(LList a, LList b){
+        LList output = new LList();
+            if(b.length() == 1 && (int) b.get(0) == 0){
+                output.append(1);
+                return output;
+            } else if (b.length() > 0 && (int) b.get(0) % 2 == 0) {
+                return exponent(multiply(a, a), halve(b));
+            } else if (b.length() > 0 && (int) b.get(0) % 2 == 1) {
+                int temp = (int) b.get(0) - 1;
+                b.moveToStart();
+                b.remove();
+                b.insert(temp);
+                return multiply(a, exponent(multiply(a, a), halve(b)));
+            }
+            return output;
+        }
+
+        public static LList halve(LList list){
+        LList output = new LList();
+        for (int i = 0; i < list.length(); i++){
+            if ((int) list.get(i) % 2 == 0) {
+                output.append((int) list.get(i) / 2);
+            } else {
+                int temp = (int) list.get(i - 1);
+                output.moveToPos(i - 1);
+                output.remove();
+                output.append(temp + 5);
+                output.append((int) list.get(i) / 2);
+            }
+        }
+        return output;
+        }
+
     /**
      * @param c
      * @return
