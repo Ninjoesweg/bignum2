@@ -9,7 +9,6 @@ public class BigNumArithmetic {
     //we use this to pop and push digits
     private static LStack stack = new LStack();
     private static String lines = ""; //has everything that has not been checked
-    private static String output = ""; //this is used for formatting output
 
     /**
      * @param args
@@ -26,7 +25,7 @@ public class BigNumArithmetic {
             System.out.println("error");
         }
         while (!lines.isEmpty()) {
-            output = getFirstLine();
+            String output = getFirstLine();
             String t = output;
             readLine(removeSpace(output));
             if (stack.length() > 1) {
@@ -104,14 +103,14 @@ public class BigNumArithmetic {
     // Use string of just leading 0's and one number no space
     public static String remove0(String string) {
         // If string was 0 to start with return "0"
-        if (string.isEmpty() || string.charAt(0) == ' ') {
-            return ("0" + string);
+        if (string.isBlank()){
+            return "";
+        }
+        if (string.charAt(0) == '0' && !(string.charAt(1) > 0)) {
+            return remove0(string.substring(1));
         }
         // Check if first digit is 0
-        else if (string.charAt(0) == '0') {
-            // Recursive using substring
-            return remove0(string.substring(1));
-        } else {
+        else {
             return string;
         }
     }
