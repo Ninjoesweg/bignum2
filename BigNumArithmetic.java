@@ -9,7 +9,6 @@ public class BigNumArithmetic {
     //we use this to pop and push digits
     private static LStack stack = new LStack();
     private static String lines = ""; //has everything that has not been checked
-    private static String output = ""; //this is used for formatting output
 
     /**
      * @param args
@@ -26,7 +25,7 @@ public class BigNumArithmetic {
             System.out.println("error");
         }
         while (!lines.isEmpty()) {
-            output = getFirstLine();
+            String output = getFirstLine();
             String t = output;
             readLine(removeSpace(output));
             if (stack.length() > 1) {
@@ -56,7 +55,8 @@ public class BigNumArithmetic {
                 }
             }
             boolean loop = true;
-            if (output.isBlank()){
+            output = removeSpace(output);
+            if (output.isEmpty()){
                 loop = false;
             }
             int c = 0;
@@ -68,7 +68,8 @@ public class BigNumArithmetic {
                 }
                 c++;
             }
-            if (!output.isBlank()) {
+            output = removeSpace(output);
+            if (!output.isEmpty()) {
                 System.out.println(output);
             }
         }
@@ -104,14 +105,18 @@ public class BigNumArithmetic {
     // Use string of just leading 0's and one number no space
     public static String remove0(String string) {
         // If string was 0 to start with return "0"
-        if (string.isEmpty() || string.charAt(0) == ' ') {
-            return ("0" + string);
+        string = removeSpace(string);
+        if (string.isEmpty()){
+            return "";
+        }
+        if (string.length() < 2 || string.charAt(1) == ' '){
+            return string;
+        }
+        if (string.charAt(0) == '0') {
+            return remove0(string.substring(1));
         }
         // Check if first digit is 0
-        else if (string.charAt(0) == '0') {
-            // Recursive using substring
-            return remove0(string.substring(1));
-        } else {
+        else {
             return string;
         }
     }
@@ -364,7 +369,7 @@ otherwise error due to our implementation
 
         public static LList exponent(LList a, LList b){
         LList output = new LList();
-            if(b.length() == 1 && (int) b.get(0) == 0){
+            if(b.length() > 0 && (int) b.get(0) == 0){
                 output.append(1);
                 return output;
             } else if (b.length() > 0 && (int) b.get(0) % 2 == 0) {
