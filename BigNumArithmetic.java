@@ -55,7 +55,8 @@ public class BigNumArithmetic {
                 }
             }
             boolean loop = true;
-            if (output.isBlank()){
+            output = removeSpace(output);
+            if (output.isEmpty()){
                 loop = false;
             }
             int c = 0;
@@ -67,7 +68,8 @@ public class BigNumArithmetic {
                 }
                 c++;
             }
-            if (!output.isBlank()) {
+            output = removeSpace(output);
+            if (!output.isEmpty()) {
                 System.out.println(output);
             }
         }
@@ -103,7 +105,8 @@ public class BigNumArithmetic {
     // Use string of just leading 0's and one number no space
     public static String remove0(String string) {
         // If string was 0 to start with return "0"
-        if (string.isBlank()){
+        string = removeSpace(string);
+        if (string.isEmpty()){
             return "";
         }
         if (string.length() < 2 || string.charAt(1) == ' '){
