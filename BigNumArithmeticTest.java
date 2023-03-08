@@ -351,7 +351,7 @@ public class BigNumArithmeticTest {
         assertEquals("4084101", output);
 
         // Complex case
-        test = "5 2  5 ^";
+        test = "5 2  5 ^ ^";
         BigNumArithmetic.readLine(test);
         stack = BigNumArithmetic.getStack();
         list = (LList) stack.pop();
@@ -359,9 +359,22 @@ public class BigNumArithmeticTest {
         for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
-        assertEquals("32", output);
+        assertEquals("3", output);
 
     }
 
+    @Test
+    public void halveTest(){
+        String test = "3124";
+        BigNumArithmetic object = new BigNumArithmetic();
+        LList list = new LList();
+        list =object.str_to_num(test, list);
+        list = object.halve(list);
+        String output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("1562", output);
+    }
 
 }

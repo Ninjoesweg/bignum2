@@ -386,14 +386,19 @@ otherwise error due to our implementation
         for (int i = 0; i < list.length(); i++){
             if ((int) list.get(i) % 2 == 0) {
                 output.append((int) list.get(i) / 2);
-            } else {
-                int temp = (int) list.get(i - 1);
-                output.moveToPos(i - 1);
-                //output.remove();
+            } else if (output.length() > 0){
+                int temp = (int) list.get(i - 1) / 2;
                 output.append((temp + 5));
-                if((int) list.get(i) / 2 != 0) {
+                output.moveToPos(i - 1);
+                output.remove();
+                if((int) list.get(i) == 1) {
+                    output.append(0);
+                }
+                if (i == list.length() - 1){
                     output.append((int) list.get(i) / 2);
                 }
+            } else {
+                output.append(0);
             }
         }
         return output;
