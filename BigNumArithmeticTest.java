@@ -11,7 +11,7 @@ public class BigNumArithmeticTest {
      *
      */
     @Test
-    void str_to_numTest() {
+    public void str_to_numTest() {
         LList temp = new LList();
         BigNumArithmetic.str_to_num("156", temp);
         assertEquals(6, temp.get(0));
@@ -23,7 +23,7 @@ public class BigNumArithmeticTest {
      *
      */
     @Test
-    void remove0Test() {
+    public void remove0Test() {
         assertEquals("120", BigNumArithmetic.remove0("00120"));
         assertEquals("120", BigNumArithmetic.remove0("120"));
         assertEquals("0", BigNumArithmetic.remove0("000000000"));
@@ -33,7 +33,7 @@ public class BigNumArithmeticTest {
      *
      */
     @Test
-    void removeSpaceTest() {
+    public void removeSpaceTest() {
         String testString = "     1  123";
         testString = BigNumArithmetic.removeSpace(testString);
         assertEquals("1  123", testString);
@@ -43,7 +43,7 @@ public class BigNumArithmeticTest {
      *
      */
     @Test
-    void getFirstTest() {
+   public void getFirstTest() {
         String testString = "123   22    33";
         LList tempList = new LList();
         BigNumArithmetic.readLine(testString);
@@ -64,7 +64,7 @@ public class BigNumArithmeticTest {
      *
      */
     @Test
-    void addTest() {
+    public void addTest() {
         // Simple case adding two numbers of same length without carryover
         String test = "123 456 +";
         BigNumArithmetic.readLine(test);
@@ -145,7 +145,7 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    void roundTest(){
+    public void roundTest(){
         String output = "";
         LList list = new LList();
         list.append(0);
@@ -159,7 +159,7 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    void multiplyTest(){
+    public void multiplyTest(){
         // Simple case two integers length one with carryover
         String test = "5 3 *";
         BigNumArithmetic.readLine(test);
@@ -274,7 +274,7 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    void exponentTest(){
+    public void exponentTest(){
         // Simple case
         String test = "2 1 ^";
         BigNumArithmetic.readLine(test);
