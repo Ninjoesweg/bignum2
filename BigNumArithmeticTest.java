@@ -60,6 +60,22 @@ public class BigNumArithmeticTest {
         assertEquals(1, tempList.get(2));
     }
 
+
+
+    @Test
+    public void add2Test() {
+        String test="2";
+        String test2="4";
+        BigNumArithmetic object=new BigNumArithmetic();
+        LList list1=object.str_to_num(test);
+        LList list2=object.str_to_num(test2);
+        LList result=object.add(list1,list2);
+        String output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("6",output);
+    }
     /**
      *
      */
