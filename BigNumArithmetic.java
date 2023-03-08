@@ -106,7 +106,10 @@ public class BigNumArithmetic {
         if (string.isBlank()){
             return "";
         }
-        if (string.charAt(0) == '0' && !(string.charAt(1) > 0)) {
+        if (string.length() < 2 || string.charAt(1) == ' '){
+            return string;
+        }
+        if (string.charAt(0) == '0') {
             return remove0(string.substring(1));
         }
         // Check if first digit is 0
@@ -363,7 +366,7 @@ otherwise error due to our implementation
 
         public static LList exponent(LList a, LList b){
         LList output = new LList();
-            if(b.length() == 1 && (int) b.get(0) == 0){
+            if(b.length() > 0 && (int) b.get(0) == 0){
                 output.append(1);
                 return output;
             } else if (b.length() > 0 && (int) b.get(0) % 2 == 0) {

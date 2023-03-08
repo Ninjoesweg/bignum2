@@ -157,4 +157,193 @@ public class BigNumArithmeticTest {
         }
         assertEquals("100", output);
     }
+
+    @Test
+    void multiplyTest(){
+        // Simple case two integers length one with carryover
+        String test = "5 3 *";
+        BigNumArithmetic.readLine(test);
+        LStack stack = BigNumArithmetic.getStack();
+        LList list = (LList) stack.pop();
+        String output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("15", output);
+
+        // Simple case two integers length one without carryover
+        test = "2 3 *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("6", output);
+
+        // Simple case two integers length two with carryover
+        test = "11 20 *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("220", output);
+
+        // Simple case two integers length one
+        // and length two without carryover
+        test = "2 13 *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("26", output);
+
+        // Simple case two integers length two
+        // and length one without carryover
+        test = "13 9 *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("117", output);
+
+        // Simple case two integers length three with carryover
+        test = "123 567 *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("69741", output);
+
+        // Simple case two integers length two and three with carryover
+        test = "12 567 *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("6804", output);
+
+        // Simple case two integers length one and three with carryover
+        test = "7 961 *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("6727", output);
+
+        // Complex test three integers length one with carryover
+        test = "7 7 7 * *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("343", output);
+
+        // complex case leading spaces and zeros
+        test = "    00002310    000064    007 * *";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("1034880", output);
+    }
+
+    @Test
+    void exponentTest(){
+        // Simple case
+        String test = "2 1 ^";
+        BigNumArithmetic.readLine(test);
+        LStack stack = BigNumArithmetic.getStack();
+        LList list = (LList) stack.pop();
+        String output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("2", output);
+
+        // Simple case with 0
+        test = "2 0 ^";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("1", output);
+
+
+        // Simple case with 0
+        test = "0 2 ^";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("0", output);
+
+        // Simple case with 0
+        test = "0 0 ^";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("1", output);
+
+
+        // Simple case with leading zeros and spaces
+        test = "00021    00005 ^";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("4084101", output);
+
+        // Complex case
+        test = "5 2  5 ^";
+        BigNumArithmetic.readLine(test);
+        stack = BigNumArithmetic.getStack();
+        list = (LList) stack.pop();
+        output = "";
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
+        }
+        assertEquals("32", output);
+
+    }
+
+
 }
