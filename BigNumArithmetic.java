@@ -15,10 +15,7 @@ public class BigNumArithmetic {
      */
     // to perform operation and the result if line in is valid
     public static void main(String[] args) {
-        if (args.length < 2) {
-            System.exit(0);
-        }
-        String filename = args[1];
+        String filename = args[0];
         try {
             lines = readFile(filename);
         } catch (IOException e) {
