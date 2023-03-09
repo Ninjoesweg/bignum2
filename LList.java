@@ -98,18 +98,6 @@ class LList implements List {
     // Check if the list is empty
     public boolean isEmpty() { return listSize == 0; }
 
-    // Returns true if item is contained in the list and false otherwise
-    public boolean contains(Object item){
-        this.moveToStart();     // Move to start
-        while(!this.isAtEnd() && this.getValue() != item){      // Check if item is at current node
-            this.next();                                        // Move to next node
-        }
-        if (!this.isAtEnd()){    // Check if item was found
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     // Returns Object at given index
     public Object get(int index){

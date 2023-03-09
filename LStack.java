@@ -37,36 +37,4 @@ class LStack implements Stack {
     // Check if the stack is empty
     public boolean isEmpty() { return size == 0; }
 
-    //  Check to see if string of ()[] is valid or not
-    // For this method I create a new stack to add the elements of the string
-    // I then loop through each character of the string and apply methods based on what the char is
-    // If the char is [ or ( push them to the stack
-    // If the char is ] or ) pop the stack and see if what was popped matches
-    public boolean isValid(String s){
-        LStack stack = new LStack();    // Create new LStack
-        int c = 0;      // Create counter
-        while (c < s.length()){     // Loop through string
-            if(s.charAt(c) == '[' || s.charAt(c) == '('){       // See if [ or ) and push
-                stack.push(s.charAt(c));
-            }
-            if(s.charAt(c) == ']'){     // See if ] and pop to see if [ and if not return false
-                if(stack.size <= 0 || (char)stack.pop() != '['){
-                 System.out.println("Not valid");       // Print not valid
-                 return false;
-                }
-            }
-            if(s.charAt(c) == ')'){         // See if ) and pop to see if ( and if not return false
-                if(stack.size <= 0 || (char)stack.pop() != '('){
-                    System.out.println("Not valid");    // Print not valid
-                    return false;
-                }
-            }
-            c++;    // Increment counter
-        }
-        if(stack.size > 0){     // If stack has [ or ( left in it then return not valid
-            System.out.println("Not valid");
-            return false;
-        }
-        return true;
-    }
 }
