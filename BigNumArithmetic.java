@@ -15,57 +15,113 @@ public class BigNumArithmetic {
      */
     // to perform operation and the result if line in is valid
     public static void main(String[] args) {
+        //reads in file name from the command line
         String filename = args[0];
+        //try catch to see whether the file exists
         try {
+            //reads everything that has not be checked from the file
             lines = readFile(filename);
+            //print error message if canot read from file
         } catch (IOException e) {
             System.out.println("error");
         }
+        /*while lines that have not been check
+        are not equal to empty call getfirst line and store into output
+        then read in the lines while calling remove space function on output
+        to remove the spaces in output file
+         */
         while (!lines.isEmpty()) {
             String output = getFirstLine();
             String t = output;
             readLine(removeSpace(output));
+            //if stack has something on it
             if (stack.length() > 1) {
-                output = "";
+                output = "";//output is equal to empty string
+                //does under the condition that string t is not empty
                 while (!t.isEmpty()) {
+                    /*calling remove space on temp variable t and passing it in
+                    remove space as it takes a string var as a parmeter
+                    then updates t to new value of t with output
+                    that has removed spaces
+                     */
                     t = removeSpace(t);
-                    t = remove0(t);
+                    /*calling remove 0 on temp variable t and passing it in remove 0
+                    as it takes a string var as a parmeter
+                    then updates t to the new value of t with output
+                    that has removed all leading 0's
+
+                     */
+                    t = remove0(t);//
                     int i = 0;
                     //initialize counter to
                     // loop through the string until 1st space using string length
                     while (i < t.length() && t.charAt(i) != ' ') {
                         i++; //update counter
                     }
+                    //added to prevent additional singular space at beginning
                     t = removeSpace(t);
+                    /*output is updated to be equal to itself plus the value
+                    of whatever the first number is without the leading 0s
+
+                     */
                     output = output + remove0(t.substring(0, i)) + " ";
+                    //sets temp string var t to everything except the first number or operator
                     t = t.substring(i);
                 }
-                output = output + "=";
-                stack.clear();
+                output = output + "=";// adds an equal sign to output
+                stack.clear();//clear the stack
+                //other case the stack is not empty then do everything in this conditional
             } else if (!stack.isEmpty()){
+                /*make a LList temp variable that stores the value
+                of whatever was poped on the stack
+                 */
                 LList temp = (LList) stack.pop();
+                //this is the variable used to loop through the temp list
+                // it is 1 we subtract from it later which would cause a crash
+                //if it were 0
                 int i = 1;
-                output = output + " = ";
+                output = output + " = ";//adds an equal sign to output
+                /*loop for the conditional that the variable
+                i is less than or equal to the lenght of the LList temp value
+                 */
                 while (i <= temp.length()) {
+                    /*updates the value of output
+                    to reverse the number stored in temp
+                    to make math is easier
+                     */
                     output = output + temp.get(temp.length() - i);
-                    i++;
+                    i++;//update the counter
                 }
             }
-            boolean loop = true;
+            boolean loop = true;// make a boolean value and intilize to true
+            //update output and remove the space on output again
             output = removeSpace(output);
+            //if output is empty return false cancel loop
             if (output.isEmpty()){
                 loop = false;
             }
-            int c = 0;
+            int c = 0;// other counter for new loop
+            // while loop is equal to true do everything under the conditional
             while (loop){
+                //if c is greater or equal the length of output
+
                 if (c >= output.length()){
-                    loop = false;
-                } else if (output.charAt(c) == ' '){
+                    loop = false;//return false
+
+                }
+                //removes leading 0s and spaces for each value
+                else if (output.charAt(c) == ' '){
                     output = remove0(output.substring(0, c)) + " " + remove0(removeSpace(output.substring(c)));
                 }
-                c++;
+                c++;//updates counter
             }
+            //update output to remove space
             output = removeSpace(output);
+            /* if the output is not equal to empty
+            it doesn't output anything
+            specifically looking for the
+            empty lines
+             */
             if (!output.isEmpty()) {
                 System.out.println(output);
             }
@@ -81,6 +137,7 @@ public class BigNumArithmetic {
     public static LList str_to_num(String string, LList list) {
         // Base case
         // String is "" return
+        //checks whether is empty and if it is return the LList
         if (string.isEmpty()) {
             return list;
         }
@@ -103,16 +160,19 @@ public class BigNumArithmetic {
     public static String remove0(String string) {
         // If string was 0 to start with return "0"
         string = removeSpace(string);
+        //if string is empty return empty string
         if (string.isEmpty()){
             return "";
         }
+        // if string is = to just 0 reuturn the string
         if (string.length() < 2 || string.charAt(1) == ' '){
             return string;
         }
+        // if the string starts with 0 remove it
         if (string.charAt(0) == '0') {
             return remove0(string.substring(1));
         }
-        // Check if first digit is 0
+        // otherwise return just the string
         else {
             return string;
         }
@@ -140,9 +200,9 @@ public class BigNumArithmetic {
     // Remove space before running
     public static String getFirst(String string) {
         string = removeSpace(string); //removes the leading space
-        int c = 0;
+        int c = 0;// intialize c
         while (c < string.length() && string.charAt(c) != ' '){
-            c++;
+            c++;//update variable
         }
         string = remove0(string.substring(0, c)) + string.substring(c); //removes leading 0s
         //checks if the string is empty
@@ -173,10 +233,15 @@ public class BigNumArithmetic {
                 // Multiply
                 // checks if stacks has two numbers on the stack to perform operations
                 if (!isValid()) {
+                    //pushs a new stack to cause to be caught
                     stack.push(new LList());
                     return "";
                 }
+                /*multiples output and pushes onto stack and
+                pops the numbers used to multiply
+                 */
                 stack.push(multiply((LList) stack.pop(), (LList) stack.pop()));
+                //removes the operator
                 string = string.substring(1);
                 string = removeSpace(string); //removes the leading space
                 return string;
@@ -186,9 +251,16 @@ public class BigNumArithmetic {
                 // Exponent
                 // checks if stacks has two numbers on the stack to perform operations
                 if (!isValid()) {
+                    //pushs a new stack to cause to be caught
                     stack.push(new LList());
                     return "";
                 }
+                /*create two LList for parmeters for later function
+                pop the digits that are having the operator performed on them
+                and then push the result of each product of exponent onto
+                the stack
+                 */
+
                 LList b = (LList) stack.pop();
                 LList a = (LList) stack.pop();
                 stack.push(exponent(a, b));
@@ -212,7 +284,9 @@ public class BigNumArithmetic {
      */
     //
     public static void readLine(String string) {
+        //checks for if the string is not empty
         while (!string.isEmpty()) {
+            // if its not empty performs operations to make empty 1 value a time
             string = getFirst(string);
         }
     }
@@ -238,11 +312,6 @@ public class BigNumArithmetic {
      * @return
      */
     public static String getFirstLine() {
-        /*
-        if(lines.isEmpty()){
-            return "";
-        }
-         */
         int i = 0; //initialize counter
         //checks for whether we are on new line
         while (i < lines.length() && lines.charAt(i) != '\r' && lines.charAt(i) != '\n') {
@@ -310,23 +379,32 @@ otherwise error due to our implementation
     }
 
     public static LList multiply(LList a, LList b){
+        // intialize 2 LLists
         LList output = new LList();
         LList tempList = new LList();
-        int temp = 0;
-        int c;
-        int i = 0;
+        int temp = 0; //create a temp variable
+        int c; //create 2nd counter
+        int i = 0;// create 1st counter
+        /*
+        loops through LList a and at every stop
+        loops through LList b and performs multiply
+        and then appends to the output
+         */
         while (i < a.length()){
             c =0;
             int counter = 0;
             tempList.clear();
             while (counter < i) {
                 tempList.append(0);
-                counter++;
+                counter++;//update counter
             }
+            /*
+
+             */
                 while (c < b.length()){
                     temp = (int) b.get(c) * (int) a.get(i);
                     tempList.append(temp);
-                    c++;
+                    c++;//update counter
                 }
                 tempList = round(tempList);
             output = add(output, tempList);
