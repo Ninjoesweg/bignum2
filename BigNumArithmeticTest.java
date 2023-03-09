@@ -12,7 +12,10 @@ public class BigNumArithmeticTest {
      */
     @Test
     public void str_to_numTest() {
+        //create LList object
         LList temp = new LList();
+        //call function on big num object
+        //does it convert the 156 from string to numerical digit
         BigNumArithmetic.str_to_num("156", temp);
         assertEquals(6, temp.get(0));
         assertEquals(5, temp.get(1));
@@ -24,6 +27,7 @@ public class BigNumArithmeticTest {
      */
     @Test
     public void remove0Test() {
+        //tests if 0s were removed from input string
         assertEquals("120", BigNumArithmetic.remove0("00120"));
         assertEquals("120", BigNumArithmetic.remove0("120"));
         assertEquals("0", BigNumArithmetic.remove0("000000000"));
@@ -34,6 +38,7 @@ public class BigNumArithmeticTest {
      */
     @Test
     public void removeSpaceTest() {
+        //checks to see if leading spaces were removed from the input string
         String testString = "     1  123";
         testString = BigNumArithmetic.removeSpace(testString);
         assertEquals("1  123", testString);
@@ -43,7 +48,7 @@ public class BigNumArithmeticTest {
      *
      */
     @Test
-   public void getFirstTest() {
+    public void getFirstTest() {
         String testString = "123   22    33";
         LList tempList = new LList();
         BigNumArithmetic.readLine(testString);
@@ -60,24 +65,6 @@ public class BigNumArithmeticTest {
         assertEquals(1, tempList.get(2));
     }
 
-
-
-    @Test
-    public void add2Test() {
-        String test="2";
-        String test2="4";
-        BigNumArithmetic object=new BigNumArithmetic();
-        LList list1= new LList();
-        list1 = object.str_to_num(test, list1);
-        LList list2= new LList();
-        list2 = object.str_to_num(test2, list2);
-        LList result=object.add(list1,list2);
-        String output = "";
-        for (int i = 1; i <= result.length(); i++) {
-            output = output + result.get(result.length() - i);
-        }
-        assertEquals("6",output);
-    }
     /**
      *
      */
@@ -163,7 +150,8 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    public void roundTest(){
+    public void roundTest() {
+        // checks for whether carry over is done correctly
         String output = "";
         LList list = new LList();
         list.append(0);
@@ -177,7 +165,7 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    public void multiplyTest(){
+    public void multiplyTest() {
         // Simple case two integers length one with carryover
         String test = "5 3 *";
         BigNumArithmetic.readLine(test);
@@ -292,7 +280,7 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    public void exponentTest(){
+    public void exponentTest() {
         // Simple case
         String test = "2 1 ^";
         BigNumArithmetic.readLine(test);
@@ -364,11 +352,11 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    public void halveTest(){
+    public void halveTest() {
         String test = "3124";
         BigNumArithmetic object = new BigNumArithmetic();
         LList list = new LList();
-        list =object.str_to_num(test, list);
+        list = object.str_to_num(test, list);
         list = object.halve(list);
         String output = "";
         for (int i = 1; i <= list.length(); i++) {

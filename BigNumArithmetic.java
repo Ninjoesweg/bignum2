@@ -71,7 +71,7 @@ public class BigNumArithmetic {
                 output = output + "=";// adds an equal sign to output
                 stack.clear();//clear the stack
                 //other case the stack is not empty then do everything in this conditional
-            } else if (!stack.isEmpty()){
+            } else if (!stack.isEmpty()) {
                 /*make a LList temp variable that stores the value
                 of whatever was poped on the stack
                  */
@@ -97,20 +97,20 @@ public class BigNumArithmetic {
             //update output and remove the space on output again
             output = removeSpace(output);
             //if output is empty return false cancel loop
-            if (output.isEmpty()){
+            if (output.isEmpty()) {
                 loop = false;
             }
             int c = 0;// other counter for new loop
             // while loop is equal to true do everything under the conditional
-            while (loop){
+            while (loop) {
                 //if c is greater or equal the length of output
 
-                if (c >= output.length()){
+                if (c >= output.length()) {
                     loop = false;//return false
 
                 }
                 //removes leading 0s and spaces for each value
-                else if (output.charAt(c) == ' '){
+                else if (output.charAt(c) == ' ') {
                     output = remove0(output.substring(0, c)) + " " + remove0(removeSpace(output.substring(c)));
                 }
                 c++;//updates counter
@@ -161,11 +161,11 @@ public class BigNumArithmetic {
         // If string was 0 to start with return "0"
         string = removeSpace(string);
         //if string is empty return empty string
-        if (string.isEmpty()){
+        if (string.isEmpty()) {
             return "";
         }
         // if string is = to just 0 reuturn the string
-        if (string.length() < 2 || string.charAt(1) == ' '){
+        if (string.length() < 2 || string.charAt(1) == ' ') {
             return string;
         }
         // if the string starts with 0 remove it
@@ -201,7 +201,7 @@ public class BigNumArithmetic {
     public static String getFirst(String string) {
         string = removeSpace(string); //removes the leading space
         int c = 0;// intialize c
-        while (c < string.length() && string.charAt(c) != ' '){
+        while (c < string.length() && string.charAt(c) != ' ') {
             c++;//update variable
         }
         string = remove0(string.substring(0, c)) + string.substring(c); //removes leading 0s
@@ -320,12 +320,12 @@ public class BigNumArithmetic {
         //storing the 1st line
         String temp = lines.substring(0, i);
         boolean loop = true;
-        while (loop){
-            if(i >= lines.length()){
+        while (loop) {
+            if (i >= lines.length()) {
                 loop = false;
-            } else if (lines.charAt(i) == '\r' || lines.charAt(i) == '\n'){
+            } else if (lines.charAt(i) == '\r' || lines.charAt(i) == '\n') {
                 i++;
-            } else{
+            } else {
                 loop = false;
             }
         }
@@ -372,13 +372,13 @@ otherwise error due to our implementation
             temp.append(sum);
             i++; // update counter
         }
-        if(r != 0){
+        if (r != 0) {
             temp.append(r);
         }
         return temp;
     }
 
-    public static LList multiply(LList a, LList b){
+    public static LList multiply(LList a, LList b) {
         // intialize 2 LLists
         LList output = new LList();
         LList tempList = new LList();
@@ -390,8 +390,8 @@ otherwise error due to our implementation
         loops through LList b and performs multiply
         and then appends to the output
          */
-        while (i < a.length()){
-            c =0;
+        while (i < a.length()) {
+            c = 0;
             int counter = 0;
             tempList.clear();
             while (counter < i) {
@@ -401,98 +401,133 @@ otherwise error due to our implementation
             /*
 
              */
-                while (c < b.length()){
-                    temp = (int) b.get(c) * (int) a.get(i);
-                    tempList.append(temp);
-                    c++;//update counter
-                }
-                tempList = round(tempList);
+            while (c < b.length()) {
+                temp = (int) b.get(c) * (int) a.get(i);
+                tempList.append(temp);
+                c++;//update counter
+            }
+            //this line does the carry over for muliplication
+            tempList = round(tempList);
+            //update output
             output = add(output, tempList);
-            i++;
+            i++;//update i
         }
-
         return output;
     }
 
 
-    public static LList round(LList list){
-        int r = 0;
-        int temp = 0;
+    public static LList round(LList list) {
+        //intilize intergers to be used for carryover
+        int r = 0;//remainder
+        int temp = 0;// temp var for output
+        //store output as a new list object
         LList output = new LList();
-        for (int i = 0; i < list.length(); i++){
+        /*
+        loop for the length of the list (when you have a value not 1 for r)
+        and do carryover while updating the value of remainder
+        when necessary along with temp value of output
+        and then append to output LList the value of temp
+        which has done the carryover
+         */
+        for (int i = 0; i < list.length(); i++) {
             temp = (int) list.get(i) + r;
-            if((int) list.get(i) >= 10){
+            if ((int) list.get(i) >= 10) {
                 r = temp / 10;
                 temp = temp % 10;
                 output.append(temp);
             }
+            // if the remainder is just append temp to output LList
             else {
                 r = 0;
                 output.append(temp);
             }
-            }
-        if(r != 0){
+        }
+        //if the remainder is not 0 append the remainder to the output LList
+        if (r != 0) {
             output.append(r);
         }
-        for (int i = 0; i < output.length(); i++){
-            if((int) output.get(i) >= 10){
+        /*loop for output length and if the value of output at that index is
+        greater than or = 10
+         */
+        for (int i = 0; i < output.length(); i++) {
+            if ((int) output.get(i) >= 10) {
+                //call round on output
                 return round(output);
             }
         }
-            return output;
-        }
+        return output;
+    }
 
-        public static LList exponent(LList a, LList b){
+    public static LList exponent(LList a, LList b) {
+        //create LList for output
         LList output = new LList();
-            if(b.length() == 1 && (int) b.get(0) == 0){
-                output.append(1);
-                return output;
-            } else if (b.length() > 0 && (int) b.get(0) % 2 == 0) {
-                LList temp = new LList();
-                output = exponent(multiply(a, a), str_to_num(remove0(num_to_str(halve(b))), temp));
-            } else if (b.length() == 1 && (int) b.get(0) == 1) {
-                return a;
-            } else if (b.length() > 0 && (int) b.get(0) % 2 == 1) {
-                int temp = (int) b.get(0) - 1;
-                LList templist = new LList();
-                b.moveToStart();
-                b.remove();
-                b.insert(temp);
-                output = multiply(a, exponent(multiply(a, a), str_to_num(remove0(num_to_str(halve(b))), templist)));
-            }
+        //checks to see you are raising something to a power of 0
+        if (b.length() == 1 && (int) b.get(0) == 0) {
+            output.append(1);
             return output;
-        }
 
-        public static LList halve(LList list){
+        }
+        //checks to see if raised to an even power
+        else if (b.length() > 0 && (int) b.get(0) % 2 == 0) {
+            LList temp = new LList();
+            output = exponent(multiply(a, a), str_to_num(remove0(num_to_str(halve(b))), temp));
+        }
+        //checks to see if raised to a power of 1
+        else if (b.length() == 1 && (int) b.get(0) == 1) {
+            return a;
+        }
+        //checks to see if raised to an odd power
+        else if (b.length() > 0 && (int) b.get(0) % 2 == 1) {
+            int temp = (int) b.get(0) - 1;
+            LList templist = new LList();
+            b.moveToStart();
+            b.remove();
+            b.insert(temp);
+            output = multiply(a, exponent(multiply(a, a), str_to_num(remove0(num_to_str(halve(b))), templist)));
+        }
+        return output;
+    }
+
+    public static LList halve(LList list) {
+        //create output LList
         LList output = new LList();
-        for (int i = 0; i < list.length(); i++){
+        //loop for list length
+        for (int i = 0; i < list.length(); i++) {
+            //checks if the number at the index is even
             if ((int) list.get(i) % 2 == 0) {
                 output.append((int) list.get(i) / 2);
-            } else if (output.length() > i - 1){
+            }
+            //checks if the number at the index is odd
+            else if (output.length() > i - 1) {
                 int temp = (int) list.get(i - 1) / 2;
                 output.append((temp + 5));
                 output.moveToPos(i - 1);
                 output.remove();
-                if((int) list.get(i) == 1) {
+                //checks to see if the number at the index is a 1
+                if ((int) list.get(i) == 1) {
+                    //adds 0 to the end
                     output.append(0);
                 }
-                if (i == list.length() - 1){
+                //checks for error caused by 2nd to last digit being an odd number
+                if (i == list.length() - 1) {
                     output.append((int) list.get(i) / 2);
                 }
+                //otherwise append 0 to the end of the output LList
             } else {
                 output.append(0);
             }
         }
         return output;
-        }
+    }
 
-        public static String num_to_str(LList list){
-            String output = "";
-            for (int i = 1; i <= list.length(); i++) {
-                output = output + list.get(list.length() - i);
-            }
-            return output;
+    public static String num_to_str(LList list) {
+        String output = "";
+        //loops through the list and adds to string
+        for (int i = 1; i <= list.length(); i++) {
+            output = output + list.get(list.length() - i);
         }
+        return output;
+    }
 
     /**
      * @param c
