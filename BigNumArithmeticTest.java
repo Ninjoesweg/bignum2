@@ -48,7 +48,7 @@ public class BigNumArithmeticTest {
      *
      */
     @Test
-    public void getFirstTest() {
+   public void getFirstTest() {
         String testString = "123   22    33";
         LList tempList = new LList();
         BigNumArithmetic.readLine(testString);
@@ -64,10 +64,19 @@ public class BigNumArithmeticTest {
         assertEquals(2, tempList.get(1));
         assertEquals(1, tempList.get(2));
     }
-
     /**
      *
      */
+    @Test
+    public void addTest2(){
+        String test="3";
+        String test1="2";
+        BigNumArithmetic object=new BigNumArithmetic();
+        LList list1=new LList();
+        LList list2=new LList();
+        LList temp= object.add(object.str_to_num(test,list2),object.str_to_num(test1,list1));
+        assertEquals("5",object.num_to_str(temp));
+    }
     @Test
     public void addTest() {
         // Simple case adding two numbers of same length without carryover
@@ -150,8 +159,8 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    public void roundTest() {
-        // checks for whether carry over is done correctly
+    public void roundTest(){
+        // checks for whether carry
         String output = "";
         LList list = new LList();
         list.append(0);
@@ -165,7 +174,7 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    public void multiplyTest() {
+    public void multiplyTest(){
         // Simple case two integers length one with carryover
         String test = "5 3 *";
         BigNumArithmetic.readLine(test);
@@ -280,7 +289,7 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    public void exponentTest() {
+    public void exponentTest(){
         // Simple case
         String test = "2 1 ^";
         BigNumArithmetic.readLine(test);
@@ -352,11 +361,11 @@ public class BigNumArithmeticTest {
     }
 
     @Test
-    public void halveTest() {
+    public void halveTest(){
         String test = "3124";
         BigNumArithmetic object = new BigNumArithmetic();
         LList list = new LList();
-        list = object.str_to_num(test, list);
+        list =object.str_to_num(test, list);
         list = object.halve(list);
         String output = "";
         for (int i = 1; i <= list.length(); i++) {
