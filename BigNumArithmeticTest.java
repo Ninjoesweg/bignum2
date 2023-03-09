@@ -359,7 +359,7 @@ public class BigNumArithmeticTest {
         for (int i = 1; i <= list.length(); i++) {
             output = output + list.get(list.length() - i);
         }
-        assertEquals("3", output);
+        assertEquals("23283064365386962890625", output);
 
     }
 

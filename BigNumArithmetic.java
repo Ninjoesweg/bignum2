@@ -366,17 +366,21 @@ otherwise error due to our implementation
 
         public static LList exponent(LList a, LList b){
         LList output = new LList();
-            if(b.length() > 0 && (int) b.get(0) == 0){
+            if(b.length() == 1 && (int) b.get(0) == 0){
                 output.append(1);
                 return output;
             } else if (b.length() > 0 && (int) b.get(0) % 2 == 0) {
-                return exponent(multiply(a, a), halve(b));
+                LList temp = new LList();
+                output = exponent(multiply(a, a), str_to_num(remove0(num_to_str(halve(b))), temp));
+            } else if (b.length() == 1 && (int) b.get(0) == 1) {
+                return a;
             } else if (b.length() > 0 && (int) b.get(0) % 2 == 1) {
                 int temp = (int) b.get(0) - 1;
+                LList templist = new LList();
                 b.moveToStart();
                 b.remove();
                 b.insert(temp);
-                return multiply(a, exponent(multiply(a, a), halve(b)));
+                output = multiply(a, exponent(multiply(a, a), str_to_num(remove0(num_to_str(halve(b))), templist)));
             }
             return output;
         }
@@ -386,7 +390,7 @@ otherwise error due to our implementation
         for (int i = 0; i < list.length(); i++){
             if ((int) list.get(i) % 2 == 0) {
                 output.append((int) list.get(i) / 2);
-            } else if (output.length() > 0){
+            } else if (output.length() > i - 1){
                 int temp = (int) list.get(i - 1) / 2;
                 output.append((temp + 5));
                 output.moveToPos(i - 1);
@@ -402,6 +406,14 @@ otherwise error due to our implementation
             }
         }
         return output;
+        }
+
+        public static String num_to_str(LList list){
+            String output = "";
+            for (int i = 1; i <= list.length(); i++) {
+                output = output + list.get(list.length() - i);
+            }
+            return output;
         }
 
     /**
