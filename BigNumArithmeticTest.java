@@ -377,4 +377,29 @@ public class BigNumArithmeticTest {
         assertEquals("1562", output);
     }
 
+    @Test
+    public void num_to_str() {
+        LList list = new LList();
+        BigNumArithmetic object = new BigNumArithmetic();
+        list.append(4);
+        list.append(3);
+        list.append(2);
+        list.append(1);
+        assertEquals("1234", object.num_to_str(list));
+    }
+
+    @Test
+    public void char_to_int() {
+        BigNumArithmetic object = new BigNumArithmetic();
+        assertEquals(0, object.char_to_int('0'));
+        assertEquals(1, object.char_to_int('1'));
+        assertEquals(2, object.char_to_int('2'));
+        assertEquals(3, object.char_to_int('3'));
+        assertEquals(4, object.char_to_int('4'));
+        assertEquals(5, object.char_to_int('5'));
+        assertEquals(6, object.char_to_int('6'));
+        assertEquals(7, object.char_to_int('7'));
+        assertEquals(8, object.char_to_int('8'));
+        assertEquals(9, object.char_to_int('9'));
+    }
 }

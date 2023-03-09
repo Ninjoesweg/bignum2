@@ -84,8 +84,6 @@ class LList implements List {
         return true;
     }
 
-    // Return true if current position is at end of the list
-    public boolean isAtEnd() { return curr == tail; }
 
     // Return current element value.
     public Object getValue() throws NoSuchElementException {

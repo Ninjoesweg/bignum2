@@ -37,8 +37,7 @@ public interface List { // List class ADT
     // Set the current position to "pos"
     public boolean moveToPos(int pos);
 
-    // Return true if current position is at end of the list
-    public boolean isAtEnd();
+
 
     // Return the current element
     public Object getValue() throws NoSuchElementException;
