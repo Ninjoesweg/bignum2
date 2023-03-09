@@ -402,4 +402,5 @@ public class BigNumArithmeticTest {
         assertEquals(8, object.char_to_int('8'));
         assertEquals(9, object.char_to_int('9'));
     }
+
 }

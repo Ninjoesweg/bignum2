@@ -38,7 +38,6 @@ public interface List { // List class ADT
     public boolean moveToPos(int pos);
 
 
-
     // Return the current element
     public Object getValue() throws NoSuchElementException;
 
